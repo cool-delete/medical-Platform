@@ -1,42 +1,42 @@
-  {
-    "name": "medical-platform",
-    "productName": "寻迹医疗",
-    "version": "1.0.0",
-    "description": "寻迹医疗",
-    "copyright": "Copyright © 2018 寻迹医疗科技",
-    "asar": true,
-    "main": "main.js",
-    "compression": "maximum",
-    "artifactName": "${productName}-${version}.${ext}",
-    "scripts": {
-      "start": "electron .",
-      "dist": "electron-builder -w"
+{
+  "name": "medical-platform",
+  "productName": "寻迹医疗",
+  "version": "1.0.0",
+  "description": "寻迹医疗",
+  "copyright": "Copyright © 2018 寻迹医疗科技",
+  "asar": true,
+  "main": "main.js",
+  "compression": "maximum",
+  "artifactName": "${productName}-${version}.${ext}",
+  "scripts": {
+    "start": "electron .",
+    "dist": "electron-builder -w"
+  },
+  "repository": "https://github.com/electron/electron-quick-start",
+  "keywords": [
+    "Electron",
+    "demo"
+  ],
+  "author": "GitHub",
+  "license": "CC0-1.0",
+  "devDependencies": {
+    "electron": "^4.0.7",
+    "electron-builder": "^20.39.0"
+  },
+  "build": {
+    "appId": "",
+    
+    "win": {
+      "target": ["nsis"],
+      "legalTrademarks":"寻迹医疗有限公司"
     },
-    "repository": "https://github.com/electron/electron-quick-start",
-    "keywords": [
-      "Electron",
-      "demo"
-    ],
-    "author": "GitHub",
-    "license": "CC0-1.0",
-    "devDependencies": {
-      "electron": "^4.0.7",
-      "electron-builder": "^20.39.0"
-    },
-    "build": {
-      "appId": "",
-      
-      "win": {
-        "target": ["nsis"],
-        "legalTrademarks":"寻迹医疗有限公司"
-      },
-      "nsis": {
-        "allowToChangeInstallationDirectory": true,
-        "oneClick": false,
-        "createDesktopShortcut":true,
-        "menuCategory": true,
-        "allowElevation": false
-      
-      }
-  }
-  }
+    "nsis": {
+      "allowToChangeInstallationDirectory": true,
+      "oneClick": false,
+      "createDesktopShortcut":true,
+      "menuCategory": true,
+      "allowElevation": false
+    
+    }
+}
+}
