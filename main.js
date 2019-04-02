@@ -8,33 +8,33 @@ const { app, BrowserWindow } = require('electron')
 let mainWindow
 
 function createWindow() {
-  // Create the browser window.
-  //创建一个浏览窗口
-  mainWindow = new BrowserWindow({
-    width: 800,
-    height: 600,
-    webPreferences: {
-      //为窗口注入node相关api,默认值为true 
-      nodeIntegration: true
-    }
-  })
+	// Create the browser window.
+	//创建一个浏览窗口
+	mainWindow = new BrowserWindow({
+		width: 800,
+		height: 600,
+		webPreferences: {
+			//为窗口注入node相关api,默认值为true 
+			nodeIntegration: true
+		}
+	})
 
-  // and load the index.html of the app.
+	// and load the index.html of the app.
 
-  //为该应用加载index.html
-  mainWindow.loadFile('index.html')
+	//为该应用加载index.html
+	mainWindow.loadFile('index.html')
 
-  // Open the DevTools.
-  // mainWindow.webContents.openDevTools()
+	// Open the DevTools.
+	// mainWindow.webContents.openDevTools()
 
-  // Emitted when the window is closed.
-  //当关闭窗口时清空对象
-  mainWindow.on('closed', function () {
-    // Dereference the window object, usually you would store windows
-    // in an array if your app supports multi windows, this is the time
-    // when you should delete the corresponding element.
-    mainWindow = null
-  })
+	// Emitted when the window is closed.
+	//当关闭窗口时清空对象
+	mainWindow.on('closed', function () {
+		// Dereference the window object, usually you would store windows
+		// in an array if your app supports multi windows, this is the time
+		// when you should delete the corresponding element.
+		mainWindow = null
+	})
 }
 
 // This method will be called when Electron has finished
@@ -48,19 +48,19 @@ app.on('ready', createWindow)
 //当所有窗口被关闭的时候退出
 
 app.on('window-all-closed', function () {
-  // On macOS it is common for applications and their menu bar
-  // to stay active until the user quits explicitly with Cmd + Q
-  if (process.platform !== 'darwin') {//不是mac情况下可以直接退出
-    app.quit()
-  }
+	// On macOS it is common for applications and their menu bar
+	// to stay active until the user quits explicitly with Cmd + Q
+	if (process.platform !== 'darwin') {//不是mac情况下可以直接退出
+		app.quit()
+	}
 })
 
 app.on('activate', function () {
-  // On macOS it's common to re-create a window in the app when the
-  // dock icon is clicked and there are no other windows open.
-  if (mainWindow === null) {
-    createWindow()
-  }
+	// On macOS it's common to re-create a window in the app when the
+	// dock icon is clicked and there are no other windows open.
+	if (mainWindow === null) {
+		createWindow()
+	}
 })
 
 // In this file you can include the rest of your app's specific main process
@@ -68,33 +68,34 @@ app.on('activate', function () {
 
 let server;
 let mClient = require('mongodb').MongoClient;
-let DB_CONN_STR = 'mongodb://cn3333.88ip.org:27017/Pursue Tracing';
+let DB_CONN_STR = 'mongodb://cn3333.88ip.org:27017';
 //http://cn3333.88ip.org:27017/
-var selectData = function (db, callback) {
-  //连接到表 
-  var collection = db.collection('localHospital');
-  //查询数据
-  var whereStr = { "医院名称": '十大' };
-  collection.find(whereStr, function (error, cursor) {
-    cursor.forEach(function (error, doc) {
-      if (doc) {
-        //console.log(doc);
-        if (doc["医院名称"]) {
-          console.log("addTime: " + doc["医院名称"]);
-          console.log("ad");
-        }
-      }
-    });
+var selectData = function (db, mClient, callback) {
+	//连接到表 
+	var collection = db.collection('localHospital');
+	//查询数据
+	console.log("collection打印： " + collection);
+	// var whereStr = { "医院简介": 'op' };
+	collection.find({}).forEach((item) => {
+		console.log("准备循环结果集");
 
-  });
+		if (item) {
+			console.log(item);
+			if (item["ce"]) {
+				console.log("addTime: " + item["ce"]);
+				console.log("ad");
+			}
+		}
 
+	})
+	callback(mClient)
 }
 
+
 mClient.connect(DB_CONN_STR, { useNewUrlParser: true }, function (err, mClient) {
-  console.log("已连接!");
-  selectData(mClient.db('localhospital'), function (result) {
-    console.log(result);
-    db.close();
-  });
+	console.log("已连接!");
+	selectData(mClient.db('Pursue_Tracing'), mClient, function (db) {
+		db.close();
+	});
 });
 
