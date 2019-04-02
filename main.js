@@ -46,6 +46,7 @@ app.on('ready', createWindow)
 
 // Quit when all windows are closed.
 //当所有窗口被关闭的时候退出
+
 app.on('window-all-closed', function () {
   // On macOS it is common for applications and their menu bar
   // to stay active until the user quits explicitly with Cmd + Q
@@ -64,3 +65,36 @@ app.on('activate', function () {
 
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and require them here.
+
+let server;
+let mClient = require('mongodb').MongoClient;
+let DB_CONN_STR = 'mongodb://cn3333.88ip.org:27017/Pursue Tracing';
+//http://cn3333.88ip.org:27017/
+var selectData = function (db, callback) {
+  //连接到表 
+  var collection = db.collection('localHospital');
+  //查询数据
+  var whereStr = { "医院名称": '十大' };
+  collection.find(whereStr, function (error, cursor) {
+    cursor.forEach(function (error, doc) {
+      if (doc) {
+        //console.log(doc);
+        if (doc["医院名称"]) {
+          console.log("addTime: " + doc["医院名称"]);
+          console.log("ad");
+        }
+      }
+    });
+
+  });
+
+}
+
+mClient.connect(DB_CONN_STR, { useNewUrlParser: true }, function (err, mClient) {
+  console.log("已连接!");
+  selectData(mClient.db('localhospital'), function (result) {
+    console.log(result);
+    db.close();
+  });
+});
+

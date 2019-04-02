@@ -25,18 +25,22 @@
   },
   "build": {
     "appId": "",
-    
     "win": {
-      "target": ["nsis"],
-      "legalTrademarks":"寻迹医疗有限公司"
+      "target": [
+        "nsis"
+      ],
+      "legalTrademarks": "寻迹医疗有限公司"
     },
     "nsis": {
       "allowToChangeInstallationDirectory": true,
       "oneClick": false,
-      "createDesktopShortcut":true,
+      "createDesktopShortcut": true,
       "menuCategory": true,
       "allowElevation": false
-    
     }
+  },
+  "dependencies": {
+    "mongodb": "^3.2.2",
+    "npm": "^6.9.0"
+  }
 }
-} 
